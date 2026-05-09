@@ -33,7 +33,10 @@ export default async function handler(req, res) {
     res.status(200).send(csvData);
 
   } catch (error) {
-    console.error('Chyba při stahování dat z Kebooly:', error);
-    res.status(500).json({ error: 'Nepodařilo se stáhnout data z Kebooly.' });
+    console.error('Chyba při stahování dat z Kebooly:', error.message);
+    res.status(500).json({ 
+      error: 'Nepodařilo se stáhnout data z Kebooly.',
+      detail: error.message 
+    });
   }
 }
