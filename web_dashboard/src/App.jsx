@@ -142,9 +142,9 @@ function App() {
 
 return (
     <div>
-      <h1 style={{ textAlign: 'center', marginBottom: '2rem', fontSize: '3rem' }}>✨ Investiční Portfolio</h1>
+      <h1 className="header-title">✨ Investiční Portfolio</h1>
       
-      <div className="glass-card" style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+      <div className="glass-card controls-card">
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
           <strong style={{ color: '#94a3b8' }}>Investice:</strong>
           {allInvestments.map(inv => (
@@ -173,8 +173,8 @@ return (
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '250px 1fr', gap: '1.5rem', marginBottom: '3rem' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <div className="main-layout-grid">
+        <div className="kpi-grid">
           <div className="glass-card" style={{ textAlign: 'center', padding: '16px' }}>
             <div style={{ color: '#94a3b8', marginBottom: '0.2rem', fontSize: '0.8rem', textTransform: 'uppercase' }}>Celková Hodnota</div>
             <div className="text-gradient" style={{ fontSize: '1.8rem', fontWeight: 600 }}>{formatCZK(agg.totalNow)}</div>
@@ -270,7 +270,7 @@ return (
       </div>
 
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '1.5rem' }}>
+      <div className="kpi-row-grid">
         {pivot.rows.map(row => {
           const typeData = filteredData.filter(d => d.TYP_INVESTICE === row.type).sort((a,b) => a.YEAR_MONTH.localeCompare(b.YEAR_MONTH));
           const opt = {

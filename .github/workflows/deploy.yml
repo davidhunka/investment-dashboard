@@ -1,0 +1,58 @@
+name: Deploy React App to GitHub Pages
+
+on:
+  # Spusti po nahrani na main vetev
+  push:
+    branches: ["main", "master"]
+  # Umoznuje spustit rucne
+  workflow_dispatch:
+
+# Nastaveni prav (dulezite pro zapis na gh-pages vetev)
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+# Konfigurace jednoho soubezneho deploymentu
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./web_dashboard
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: ./web_dashboard/package-lock.json
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Build
+        run: npm run build
+        
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./web_dashboard/dist
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
