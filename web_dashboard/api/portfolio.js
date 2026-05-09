@@ -10,7 +10,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const url = `https://${host}/v2/storage/tables/${tableId}/data-preview?format=csv`;
+    const url = `https://${host}/v2/storage/tables/${tableId}/data-preview?format=rfc`;
     
     // Zavoláme Keboola API
     const response = await fetch(url, {
