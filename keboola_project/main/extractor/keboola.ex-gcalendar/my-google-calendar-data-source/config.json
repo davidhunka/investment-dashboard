@@ -1,0 +1,75 @@
+{
+  "authorization": {
+    "oauth_api": {
+      "id": "102088600",
+      "version": 3
+    }
+  },
+  "parameters": {
+    "api": {
+      "baseUrl": "https://www.googleapis.com/calendar/v3/",
+      "pagination": {
+        "method": "response.param",
+        "responseParam": "nextPageToken",
+        "queryParam": "pageToken"
+      },
+      "name": "gcalendar",
+      "authentication": {
+        "type": "oauth20.login",
+        "loginRequest": {
+          "endpoint": "https://www.googleapis.com/oauth2/v4/token",
+          "params": {
+            "refresh_token": {
+              "user": "refresh_token"
+            },
+            "client_id": {
+              "consumer": "client_id"
+            },
+            "client_secret": {
+              "consumer": "client_secret"
+            },
+            "grant_type": "refresh_token"
+          },
+          "method": "FORM",
+          "headers": {
+            "Content-Type": "application/x-www-form-urlencoded"
+          }
+        },
+        "apiRequest": {
+          "query": {
+            "access_token": "access_token"
+          }
+        }
+      }
+    },
+    "config": {
+      "incrementalOutput": false,
+      "debug": 0,
+      "jobs": [
+        {
+          "endpoint": "users/me/calendarList",
+          "dataType": "calendars",
+          "dataField": "items",
+          "children": [
+            {
+              "endpoint": "calendars/{id}/events",
+              "dataType": "events",
+              "dataField": "items",
+              "placeholders": {
+                "id": {
+                  "path": "id",
+                  "function": "urlencode",
+                  "args": [
+                    {
+                      "placeholder": "value"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

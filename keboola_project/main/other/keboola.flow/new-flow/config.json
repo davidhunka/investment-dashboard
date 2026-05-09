@@ -1,0 +1,22 @@
+{
+  "tasks": [
+    {
+      "id": "655dd8fa-c21a-4bea-b96e-4e6337c1e88a",
+      "name": "keboola.ex-onedrive",
+      "phase": "64483c28-1d23-44bc-8600-50f4c8d3db3b",
+      "task": {
+        "type": "job",
+        "mode": "run",
+        "componentId": "keboola.ex-onedrive",
+        "configId": ""
+      },
+      "enabled": false
+    }
+  ],
+  "phases": [
+    {
+      "id": "64483c28-1d23-44bc-8600-50f4c8d3db3b",
+      "name": "Phase 1"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "parameters": {},
+  "storage": {
+    "input": {
+      "tables": []
+    },
+    "output": {
+      "tables": [
+        {
+          "destination": "out.c-finance.a",
+          "source": "A"
+        }
+      ]
+    }
+  }
+}

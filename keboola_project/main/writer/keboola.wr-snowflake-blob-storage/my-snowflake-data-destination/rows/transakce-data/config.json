@@ -1,0 +1,211 @@
+{
+  "parameters": {
+    "tableId": "out.c-investice.TRANSAKCE_DATA",
+    "dbName": "TRANSAKCE_DATA",
+    "incremental": false,
+    "primaryKey": [],
+    "items": [
+      {
+        "name": "TYP_UCTU",
+        "dbName": "TYP_UCTU",
+        "type": "varchar",
+        "nullable": true,
+        "default": "",
+        "size": "11"
+      },
+      {
+        "name": "DATUM_ZUCTOVANI",
+        "dbName": "DATUM_ZUCTOVANI",
+        "type": "date",
+        "nullable": true,
+        "default": "",
+        "size": ""
+      },
+      {
+        "name": "NAZEV_PROTIUCTU",
+        "dbName": "NAZEV_PROTIUCTU",
+        "type": "varchar",
+        "nullable": true,
+        "default": "",
+        "size": "16777216"
+      },
+      {
+        "name": "IBAN",
+        "dbName": "IBAN",
+        "type": "varchar",
+        "nullable": true,
+        "default": "",
+        "size": "16777216"
+      },
+      {
+        "name": "Protiucet",
+        "dbName": "Protiucet",
+        "type": "varchar",
+        "nullable": true,
+        "default": "",
+        "size": "16777216"
+      },
+      {
+        "name": "Bankovni_kod_protiuctu",
+        "dbName": "Bankovni_kod_protiuctu",
+        "type": "varchar",
+        "nullable": true,
+        "default": "",
+        "size": "16777216"
+      },
+      {
+        "name": "Prichozi_castka",
+        "dbName": "Prichozi_castka",
+        "type": "varchar",
+        "nullable": true,
+        "default": "",
+        "size": "16777216"
+      },
+      {
+        "name": "Odchozi_castka",
+        "dbName": "Odchozi_castka",
+        "type": "varchar",
+        "nullable": true,
+        "default": "",
+        "size": "16777216"
+      },
+      {
+        "name": "Mena",
+        "dbName": "Mena",
+        "type": "varchar",
+        "nullable": true,
+        "default": "",
+        "size": "16777216"
+      },
+      {
+        "name": "Konstantni_symbol",
+        "dbName": "Konstantni_symbol",
+        "type": "varchar",
+        "nullable": true,
+        "default": "",
+        "size": "16777216"
+      },
+      {
+        "name": "Specificky_symbol",
+        "dbName": "Specificky_symbol",
+        "type": "varchar",
+        "nullable": true,
+        "default": "",
+        "size": "16777216"
+      },
+      {
+        "name": "Variabilni_symbol",
+        "dbName": "Variabilni_symbol",
+        "type": "varchar",
+        "nullable": true,
+        "default": "",
+        "size": "16777216"
+      },
+      {
+        "name": "Typ_transakce",
+        "dbName": "Typ_transakce",
+        "type": "varchar",
+        "nullable": true,
+        "default": "",
+        "size": "16777216"
+      },
+      {
+        "name": "Zprava_pro_me",
+        "dbName": "Zprava_pro_me",
+        "type": "varchar",
+        "nullable": true,
+        "default": "",
+        "size": "16777216"
+      },
+      {
+        "name": "Zprava_pro_prijemce",
+        "dbName": "Zprava_pro_prijemce",
+        "type": "varchar",
+        "nullable": true,
+        "default": "",
+        "size": "16777216"
+      },
+      {
+        "name": "Adresa_prijemce",
+        "dbName": "Adresa_prijemce",
+        "type": "varchar",
+        "nullable": true,
+        "default": "",
+        "size": "16777216"
+      },
+      {
+        "name": "Kategorie",
+        "dbName": "Kategorie",
+        "type": "varchar",
+        "nullable": true,
+        "default": "",
+        "size": "16777216"
+      },
+      {
+        "name": "ID_transakce",
+        "dbName": "ID_transakce",
+        "type": "varchar",
+        "nullable": true,
+        "default": "",
+        "size": "16777216"
+      },
+      {
+        "name": "Cislo_karty",
+        "dbName": "Cislo_karty",
+        "type": "varchar",
+        "nullable": true,
+        "default": "",
+        "size": "16777216"
+      },
+      {
+        "name": "Misto_pouziti_karty",
+        "dbName": "Misto_pouziti_karty",
+        "type": "varchar",
+        "nullable": true,
+        "default": "",
+        "size": "16777216"
+      },
+      {
+        "name": "Nazev_prikazu_souhlasu",
+        "dbName": "Nazev_prikazu_souhlasu",
+        "type": "varchar",
+        "nullable": true,
+        "default": "",
+        "size": "16777216"
+      }
+    ]
+  },
+  "storage": {
+    "input": {
+      "tables": [
+        {
+          "source": "out.c-investice.TRANSAKCE_DATA",
+          "destination": "out.c-investice.TRANSAKCE_DATA.csv",
+          "columns": [
+            "TYP_UCTU",
+            "DATUM_ZUCTOVANI",
+            "NAZEV_PROTIUCTU",
+            "IBAN",
+            "Protiucet",
+            "Bankovni_kod_protiuctu",
+            "Prichozi_castka",
+            "Odchozi_castka",
+            "Mena",
+            "Konstantni_symbol",
+            "Specificky_symbol",
+            "Variabilni_symbol",
+            "Typ_transakce",
+            "Zprava_pro_me",
+            "Zprava_pro_prijemce",
+            "Adresa_prijemce",
+            "Kategorie",
+            "ID_transakce",
+            "Cislo_karty",
+            "Misto_pouziti_karty",
+            "Nazev_prikazu_souhlasu"
+          ]
+        }
+      ]
+    }
+  }
+}

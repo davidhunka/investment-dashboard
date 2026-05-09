@@ -1,0 +1,15 @@
+{
+  "parameters": {
+    "dataApp": {
+      "git": {
+        "branch": "main",
+        "entrypoint": "plan_data_editor.py",
+        "repository": "https://github.com/keboola/planning-sheets-data-app/"
+      },
+      "secrets": {
+        "#kbc_storage_token": "KBC::ProjectSecureKV::eJwB6wAU/2E6Mzp7aToyO3M6MTM0OiLe9QIAL66k/BgbyPbnS0lch/fW/GMlxC7kd1N2vXR8YczAyYkPYQ7y5DA5UgMe6Ug1/FJezPd/L8XQZsnxw7AyP1oD63P8b/U1YbPnwLt7qukN8BepECzeO2MvRcohjWWfhi9EB/oVl2sNQubiDihB6p7GzZdEiouOJIAvdIM5b1zjytVxZiI7aTozO3M6MjY6Imdlbi1lbmNyeXB0b3I2NTE0NTg0OWQxODk1IjtpOjQ7czozMjoiMTdkMTg3N2FjMzc3NGVmYTljOTQxOTI0MGE0MzA5YjkiO32Wil8S"
+      }
+    },
+    "id": "52468521"
+  }
+}

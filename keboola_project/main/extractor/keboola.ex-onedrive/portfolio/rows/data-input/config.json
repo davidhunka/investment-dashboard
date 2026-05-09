@@ -1,0 +1,18 @@
+{
+  "parameters": {
+    "workbook": {
+      "driveId": "0F8EC8515B9E77CB",
+      "fileId": "F8EC8515B9E77CB!192392",
+      "metadata": {
+        "name": "Osobní investice.xlsx"
+      }
+    },
+    "worksheet": {
+      "name": "data-input",
+      "id": "{B9A6163D-B125-43D6-A173-9443A9207DCF}",
+      "metadata": {
+        "name": "Data input"
+      }
+    }
+  }
+}

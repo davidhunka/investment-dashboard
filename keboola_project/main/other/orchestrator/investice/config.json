@@ -1,0 +1,77 @@
+{
+  "crontabRecord": "15 22 * * 1",
+  "crontabTimezone": "Europe/Prague",
+  "token": {
+    "id": "782",
+    "description": "Orchestrator onedrive"
+  },
+  "active": false,
+  "tasks": [
+    {
+      "id": 11039873,
+      "component": "keboola.ex-onedrive",
+      "componentUrl": null,
+      "action": "run",
+      "actionParameters": {
+        "config": "20365439"
+      },
+      "timeoutMinutes": null,
+      "active": true,
+      "continueOnFailure": false,
+      "phase": "New phase"
+    },
+    {
+      "id": 11039874,
+      "component": "keboola.ex-onedrive",
+      "componentUrl": null,
+      "action": "run",
+      "actionParameters": {
+        "config": "8350010"
+      },
+      "timeoutMinutes": null,
+      "active": true,
+      "continueOnFailure": false,
+      "phase": "New phase"
+    },
+    {
+      "id": 11039875,
+      "component": "keboola.snowflake-transformation",
+      "componentUrl": null,
+      "action": "run",
+      "actionParameters": {
+        "config": "15402"
+      },
+      "timeoutMinutes": null,
+      "active": true,
+      "continueOnFailure": false,
+      "phase": "New phase 2"
+    },
+    {
+      "id": 11039876,
+      "component": "keboola.wr-snowflake-blob-storage",
+      "componentUrl": null,
+      "action": "run",
+      "actionParameters": {
+        "config": "7235533"
+      },
+      "timeoutMinutes": null,
+      "active": true,
+      "continueOnFailure": false,
+      "phase": "New phase 3"
+    }
+  ],
+  "notifications": [
+    {
+      "email": "david.hunka@gmail.com",
+      "channel": "error",
+      "parameters": {}
+    },
+    {
+      "email": "david.hunka@gmail.com",
+      "channel": "warning",
+      "parameters": {}
+    }
+  ],
+  "variableValuesId": null,
+  "variableValuesData": null
+}

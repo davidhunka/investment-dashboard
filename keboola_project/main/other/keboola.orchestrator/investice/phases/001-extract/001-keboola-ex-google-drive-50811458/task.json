@@ -1,0 +1,9 @@
+{
+  "name": "keboola.ex-google-drive-50811458",
+  "enabled": true,
+  "task": {
+    "mode": "run",
+    "configPath": "extractor/keboola.ex-google-drive/osobni-investice-datainput"
+  },
+  "continueOnFailure": false
+}

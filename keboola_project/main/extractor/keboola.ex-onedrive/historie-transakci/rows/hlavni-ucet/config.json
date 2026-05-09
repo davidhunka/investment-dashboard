@@ -1,0 +1,18 @@
+{
+  "parameters": {
+    "workbook": {
+      "driveId": "0F8EC8515B9E77CB",
+      "fileId": "F8EC8515B9E77CB!192984",
+      "metadata": {
+        "name": "Historie.xlsx"
+      }
+    },
+    "worksheet": {
+      "name": "hlavni-ucet",
+      "id": "{00000000-0001-0000-0000-000000000000}",
+      "metadata": {
+        "name": "Hlavní účet"
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "parameters": {
+    "port": 22,
+    "user": "",
+    "#pass": "KBC::ProjectSecureKV::eJxLtDK2qs60MrIutrIwsVK695WJoVJ6+cwlki+Kci4mr5ZuehTY3pGtdVdkHavZK0u7MukHtbEMV5PjPuom3/8sJbNwvttpjcumRR2q99Z5V615z2tlUNvUl3exSF6aRYNBq2aD8XseJetMK2Og+cZmVkqpKSlpxpYpxrqJxoYpuiYmhpa6iSYphrqmZmlG5sYmqakWJokg9SYg9UZWSolmiWZJaSmGQHEDE1ML08S0JANz47Q0w+QkY1OLNEsl61oA9eJCvA==",
+    "hostname": "",
+    "#private_key": "KBC::ProjectSecureKV::eJxLtDK2qs60MrIutrIwsVK695WJYefd/VfmRm30fP5F692thlf3VznuznJTTHkU+3Kzp1+d933lRYce7dHVmiPVUnk4XGEv+xQjobe5zfstDp31+sKR1thZnL9FcSfHsvKrHUz92gukJilZZ1oZA803NrNSSk5OskxMsUjWTTQzTtE1MU4007VMsTTVTTI1TbVINDMzMzUxB6k3Aak3slIyTTEyNja0TEwyTLMwMTM1sLS0NE02MEkxMDA0MTIyNVKyrgUAN79HAQ==",
+    "banner_timeout": 15,
+    "disabled_algorithms": ""
+  }
+}

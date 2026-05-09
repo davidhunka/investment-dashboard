@@ -1,0 +1,28 @@
+{
+  "runtime": {
+    "uiMode": "default"
+  },
+  "authorization": {
+    "oauth_api": {
+      "id": "50812047",
+      "version": 3
+    }
+  },
+  "parameters": {
+    "sheets": [
+      {
+        "fileId": "1Kd3MRyM3reNRV5dHTVN2w0OkQDR9Oj2m0bWPMvuOdOI",
+        "fileTitle": "Osobní investice",
+        "sheetId": 727173826,
+        "sheetTitle": "Data input",
+        "id": 90006,
+        "enabled": true,
+        "header": {
+          "rows": 1
+        },
+        "outputTable": "Osobni-investice-Data-input"
+      }
+    ],
+    "outputBucket": "in.c-keboola-ex-google-drive-50811458"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "parameters": {
+    "workbook": {
+      "driveId": "",
+      "fileId": "",
+      "metadata": {
+        "name": ""
+      }
+    },
+    "worksheet": {
+      "name": "",
+      "id": "",
+      "metadata": {
+        "name": ""
+      }
+    }
+  }
+}

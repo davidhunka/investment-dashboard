@@ -1,0 +1,28 @@
+{
+  "parameters": {
+    "dry_run": false,
+    "basic_options": {
+      "subject": "Example subject",
+      "message_body": "Example message body.",
+      "include_attachments": true,
+      "recipient_email_addresses": "David.Hunka@gmail.com"
+    },
+    "continue_on_error": true,
+    "configuration_type": "basic"
+  },
+  "storage": {
+    "input": {
+      "tables": [
+        {
+          "source": "out.c-investice.PORTFOLIO",
+          "destination": "PORTFOLIO.csv",
+          "where_column": "",
+          "where_values": [],
+          "where_operator": "eq",
+          "columns": [],
+          "keep_internal_timestamp_column": false
+        }
+      ]
+    }
+  }
+}

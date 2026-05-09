@@ -1,0 +1,18 @@
+{
+  "parameters": {
+    "workbook": {
+      "driveId": "0F8EC8515B9E77CB",
+      "fileId": "F8EC8515B9E77CB!192392",
+      "metadata": {
+        "name": "Osobní investice.xlsx"
+      }
+    },
+    "worksheet": {
+      "name": "portfolio",
+      "id": "{226F29C0-062D-49E5-A481-5CEB4B291459}",
+      "metadata": {
+        "name": "Portfolio"
+      }
+    }
+  }
+}

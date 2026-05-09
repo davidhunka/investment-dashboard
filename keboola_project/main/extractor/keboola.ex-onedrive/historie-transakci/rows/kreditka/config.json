@@ -1,0 +1,18 @@
+{
+  "parameters": {
+    "workbook": {
+      "driveId": "0F8EC8515B9E77CB",
+      "fileId": "F8EC8515B9E77CB!192984",
+      "metadata": {
+        "name": "Historie.xlsx"
+      }
+    },
+    "worksheet": {
+      "name": "kreditka",
+      "id": "{0AA215DD-5160-4F08-A43E-CA9F831F6079}",
+      "metadata": {
+        "name": "Kreditka"
+      }
+    }
+  }
+}

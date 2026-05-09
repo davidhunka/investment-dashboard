@@ -1,0 +1,139 @@
+{
+  "parameters": {
+    "tableId": "out.c-investice.PORTFOLIO",
+    "dbName": "PORTFOLIO",
+    "incremental": false,
+    "primaryKey": [],
+    "items": [
+      {
+        "name": "DATUM_SNAPSHOTU",
+        "dbName": "DATUM_SNAPSHOTU",
+        "type": "varchar",
+        "nullable": true,
+        "default": "",
+        "size": "16777216"
+      },
+      {
+        "name": "OBDOBI",
+        "dbName": "OBDOBI",
+        "type": "string",
+        "nullable": false,
+        "default": "",
+        "size": "255"
+      },
+      {
+        "name": "TYP_INVESTICE",
+        "dbName": "TYP_INVESTICE",
+        "type": "string",
+        "nullable": false,
+        "default": "",
+        "size": "255"
+      },
+      {
+        "name": "PRIRUSTEK_OPROTI_OBDOBI_PRED_MESICEM",
+        "dbName": "PRIRUSTEK_OPROTI_OBDOBI_PRED_MESICEM",
+        "type": "number",
+        "nullable": false,
+        "default": "",
+        "size": "38,0"
+      },
+      {
+        "name": "PRIRUSTEK_OPROTI_OBDOBI_PRED_ROKEM",
+        "dbName": "PRIRUSTEK_OPROTI_OBDOBI_PRED_ROKEM",
+        "type": "number",
+        "nullable": false,
+        "default": "",
+        "size": "38,0"
+      },
+      {
+        "name": "HODNOTA",
+        "dbName": "HODNOTA",
+        "type": "number",
+        "nullable": false,
+        "default": "",
+        "size": "38,0"
+      },
+      {
+        "name": "HODNOTA_V_OBDOBI_PRED_MESICEM",
+        "dbName": "HODNOTA_V_OBDOBI_PRED_MESICEM",
+        "type": "number",
+        "nullable": false,
+        "default": "",
+        "size": "38,0"
+      },
+      {
+        "name": "HODNOTA_V_OBDOBI_PRED_ROKEM",
+        "dbName": "HODNOTA_V_OBDOBI_PRED_ROKEM",
+        "type": "number",
+        "nullable": false,
+        "default": "",
+        "size": "38,0"
+      },
+      {
+        "name": "ZISK_OPROTI_OBDOBI_PRED_MESICEM",
+        "dbName": "ZISK_OPROTI_OBDOBI_PRED_MESICEM",
+        "type": "number",
+        "nullable": false,
+        "default": "",
+        "size": "38,0"
+      },
+      {
+        "name": "ZISK_OPROTI_OBDOBI_PRED_ROKEM",
+        "dbName": "ZISK_OPROTI_OBDOBI_PRED_ROKEM",
+        "type": "number",
+        "nullable": false,
+        "default": "",
+        "size": "38,0"
+      },
+      {
+        "name": "PODIL_MESICNIHO_ZISKU_OPROTI_CELKOVE_HODNOTE",
+        "dbName": "PODIL_MESICNIHO_ZISKU_OPROTI_CELKOVE_HODNOTE",
+        "type": "number",
+        "nullable": false,
+        "default": "",
+        "size": "38,6"
+      },
+      {
+        "name": "PODIL_ROCNIHO_ZISKU_OPROTI_CELKOVE_HODNOTE",
+        "dbName": "PODIL_ROCNIHO_ZISKU_OPROTI_CELKOVE_HODNOTE",
+        "type": "number",
+        "nullable": false,
+        "default": "",
+        "size": "38,6"
+      },
+      {
+        "name": "ZISK_ODJAKZIVA",
+        "dbName": "ZISK_ODJAKZIVA",
+        "type": "number",
+        "nullable": false,
+        "default": "",
+        "size": "38,0"
+      }
+    ]
+  },
+  "storage": {
+    "input": {
+      "tables": [
+        {
+          "source": "out.c-investice.PORTFOLIO",
+          "destination": "out.c-investice.PORTFOLIO.csv",
+          "columns": [
+            "DATUM_SNAPSHOTU",
+            "OBDOBI",
+            "TYP_INVESTICE",
+            "PRIRUSTEK_OPROTI_OBDOBI_PRED_MESICEM",
+            "PRIRUSTEK_OPROTI_OBDOBI_PRED_ROKEM",
+            "HODNOTA",
+            "HODNOTA_V_OBDOBI_PRED_MESICEM",
+            "HODNOTA_V_OBDOBI_PRED_ROKEM",
+            "ZISK_OPROTI_OBDOBI_PRED_MESICEM",
+            "ZISK_OPROTI_OBDOBI_PRED_ROKEM",
+            "PODIL_MESICNIHO_ZISKU_OPROTI_CELKOVE_HODNOTE",
+            "PODIL_ROCNIHO_ZISKU_OPROTI_CELKOVE_HODNOTE",
+            "ZISK_ODJAKZIVA"
+          ]
+        }
+      ]
+    }
+  }
+}

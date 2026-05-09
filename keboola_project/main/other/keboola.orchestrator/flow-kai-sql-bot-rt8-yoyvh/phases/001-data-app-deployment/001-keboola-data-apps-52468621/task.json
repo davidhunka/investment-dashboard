@@ -1,0 +1,9 @@
+{
+  "name": "keboola.data-apps-52468621",
+  "enabled": true,
+  "continueOnFailure": false,
+  "task": {
+    "mode": "run",
+    "configPath": "app/keboola.data-apps/data-app-kai-sql-bot-rt8-yoyvh"
+  }
+}

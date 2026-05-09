@@ -1,0 +1,283 @@
+{
+  "parameters": {
+    "tableId": "in.c-keboola-ex-onedrive-8350010.kreditka",
+    "dbName": "KREDITKA",
+    "incremental": false,
+    "primaryKey": [],
+    "items": [
+      {
+        "name": "Datum_zauctovani",
+        "dbName": "Datum_zauctovani",
+        "type": "string",
+        "nullable": false,
+        "default": "",
+        "size": "255"
+      },
+      {
+        "name": "DEN",
+        "dbName": "DEN",
+        "type": "string",
+        "nullable": false,
+        "default": "",
+        "size": "255"
+      },
+      {
+        "name": "MESIC",
+        "dbName": "MESIC",
+        "type": "string",
+        "nullable": false,
+        "default": "",
+        "size": "255"
+      },
+      {
+        "name": "ROK",
+        "dbName": "ROK",
+        "type": "string",
+        "nullable": false,
+        "default": "",
+        "size": "255"
+      },
+      {
+        "name": "Nazev_protiuctu",
+        "dbName": "Nazev_protiuctu",
+        "type": "string",
+        "nullable": false,
+        "default": "",
+        "size": "255"
+      },
+      {
+        "name": "IBAN",
+        "dbName": "IBAN",
+        "type": "string",
+        "nullable": false,
+        "default": "",
+        "size": "255"
+      },
+      {
+        "name": "Protiucet",
+        "dbName": "Protiucet",
+        "type": "string",
+        "nullable": false,
+        "default": "",
+        "size": "255"
+      },
+      {
+        "name": "Bankovni_kod_protiuctu",
+        "dbName": "Bankovni_kod_protiuctu",
+        "type": "string",
+        "nullable": false,
+        "default": "",
+        "size": "255"
+      },
+      {
+        "name": "Prichozi_castka",
+        "dbName": "Prichozi_castka",
+        "type": "string",
+        "nullable": false,
+        "default": "",
+        "size": "255"
+      },
+      {
+        "name": "Odchozi_castka",
+        "dbName": "Odchozi_castka",
+        "type": "string",
+        "nullable": false,
+        "default": "",
+        "size": "255"
+      },
+      {
+        "name": "Mena",
+        "dbName": "Mena",
+        "type": "string",
+        "nullable": false,
+        "default": "",
+        "size": "255"
+      },
+      {
+        "name": "Konstantni_symbol",
+        "dbName": "Konstantni_symbol",
+        "type": "string",
+        "nullable": false,
+        "default": "",
+        "size": "255"
+      },
+      {
+        "name": "Specificky_symbol",
+        "dbName": "Specificky_symbol",
+        "type": "string",
+        "nullable": false,
+        "default": "",
+        "size": "255"
+      },
+      {
+        "name": "Variabilni_symbol",
+        "dbName": "Variabilni_symbol",
+        "type": "string",
+        "nullable": false,
+        "default": "",
+        "size": "255"
+      },
+      {
+        "name": "Typ_transakce",
+        "dbName": "Typ_transakce",
+        "type": "string",
+        "nullable": false,
+        "default": "",
+        "size": "255"
+      },
+      {
+        "name": "Zprava_pro_me",
+        "dbName": "Zprava_pro_me",
+        "type": "string",
+        "nullable": false,
+        "default": "",
+        "size": "255"
+      },
+      {
+        "name": "Adresa_platce",
+        "dbName": "Adresa_platce",
+        "type": "string",
+        "nullable": false,
+        "default": "",
+        "size": "255"
+      },
+      {
+        "name": "Zprava_pro_prijemce",
+        "dbName": "Zprava_pro_prijemce",
+        "type": "string",
+        "nullable": false,
+        "default": "",
+        "size": "255"
+      },
+      {
+        "name": "Adresa_prijemce",
+        "dbName": "Adresa_prijemce",
+        "type": "string",
+        "nullable": false,
+        "default": "",
+        "size": "255"
+      },
+      {
+        "name": "Poznamka",
+        "dbName": "Poznamka",
+        "type": "string",
+        "nullable": false,
+        "default": "",
+        "size": "255"
+      },
+      {
+        "name": "Kategorie",
+        "dbName": "Kategorie",
+        "type": "string",
+        "nullable": false,
+        "default": "",
+        "size": "255"
+      },
+      {
+        "name": "ID_transakce",
+        "dbName": "ID_transakce",
+        "type": "string",
+        "nullable": false,
+        "default": "",
+        "size": "255"
+      },
+      {
+        "name": "Cislo_karty",
+        "dbName": "Cislo_karty",
+        "type": "string",
+        "nullable": false,
+        "default": "",
+        "size": "255"
+      },
+      {
+        "name": "Misto_pouziti_karty",
+        "dbName": "Misto_pouziti_karty",
+        "type": "string",
+        "nullable": false,
+        "default": "",
+        "size": "255"
+      },
+      {
+        "name": "Nazev_investicniho_nastroje",
+        "dbName": "Nazev_investicniho_nastroje",
+        "type": "string",
+        "nullable": false,
+        "default": "",
+        "size": "255"
+      },
+      {
+        "name": "Reference_platby",
+        "dbName": "Reference_platby",
+        "type": "string",
+        "nullable": false,
+        "default": "",
+        "size": "255"
+      },
+      {
+        "name": "Cislo_virtualni_karty",
+        "dbName": "Cislo_virtualni_karty",
+        "type": "string",
+        "nullable": false,
+        "default": "",
+        "size": "255"
+      },
+      {
+        "name": "Nazev_zarizeni",
+        "dbName": "Nazev_zarizeni",
+        "type": "string",
+        "nullable": false,
+        "default": "",
+        "size": "255"
+      },
+      {
+        "name": "Nazev_prikazu_souhlasu",
+        "dbName": "Nazev_prikazu_souhlasu",
+        "type": "string",
+        "nullable": false,
+        "default": "",
+        "size": "255"
+      }
+    ]
+  },
+  "storage": {
+    "input": {
+      "tables": [
+        {
+          "source": "{{:default-bucket:extractor/keboola.ex-onedrive/historie-transakci}}.kreditka",
+          "destination": "in.c-keboola-ex-onedrive-8350010.kreditka.csv",
+          "columns": [
+            "Datum_zauctovani",
+            "DEN",
+            "MESIC",
+            "ROK",
+            "Nazev_protiuctu",
+            "IBAN",
+            "Protiucet",
+            "Bankovni_kod_protiuctu",
+            "Prichozi_castka",
+            "Odchozi_castka",
+            "Mena",
+            "Konstantni_symbol",
+            "Specificky_symbol",
+            "Variabilni_symbol",
+            "Typ_transakce",
+            "Zprava_pro_me",
+            "Adresa_platce",
+            "Zprava_pro_prijemce",
+            "Adresa_prijemce",
+            "Poznamka",
+            "Kategorie",
+            "ID_transakce",
+            "Cislo_karty",
+            "Misto_pouziti_karty",
+            "Nazev_investicniho_nastroje",
+            "Reference_platby",
+            "Cislo_virtualni_karty",
+            "Nazev_zarizeni",
+            "Nazev_prikazu_souhlasu"
+          ]
+        }
+      ]
+    }
+  }
+}

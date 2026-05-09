@@ -1,0 +1,15 @@
+{
+  "parameters": {
+    "connection_config": {
+      "use_oauth": false,
+      "creds_config": {
+        "server_host": "smtp.gmail.com",
+        "server_port": 465,
+        "#sender_password": "KBC::ProjectSecureKV::eJxLtDK2qs60MrIutjI0MLZSuveViWFKySfvf/U1i/Zo8Z7u/T5767Zo86PXjJ7bHxTv3b5izgNh471eh5w1u1/MeSB36YhYt+YLgatVkazblRl7ZkWdTVB7ysPdPXn78kNSl6ZlXN/+yNgpSfKS0/6jpdwNO38X3Nz+gWeWmquSdaaVMdBOIzMrpfTUPN3UvOSiyoKS/CIzM0sz07RUIDQ2NgSpMgGqMjayUrI0TEu1NDQzTDEwNzZJMrKwNDFJM0hLSTG3SE01MTRJVLKuBQDV0lEh",
+        "use_proxy_server": false,
+        "connection_protocol": "SSL",
+        "sender_email_address": "David.Hunka@gmail.com"
+      }
+    }
+  }
+}

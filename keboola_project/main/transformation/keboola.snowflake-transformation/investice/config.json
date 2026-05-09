@@ -1,0 +1,46 @@
+{
+  "parameters": {},
+  "storage": {
+    "input": {
+      "tables": [
+        {
+          "source": "{{:default-bucket:extractor/keboola.ex-onedrive/historie-transakci}}.hlavni-ucet",
+          "destination": "HLAVNI_UCET",
+          "where_column": "",
+          "where_values": [],
+          "where_operator": "eq",
+          "columns": []
+        },
+        {
+          "source": "{{:default-bucket:extractor/keboola.ex-onedrive/historie-transakci}}.kreditka",
+          "destination": "KREDITKA",
+          "where_column": "",
+          "where_values": [],
+          "where_operator": "eq",
+          "columns": []
+        },
+        {
+          "source": "in.c-keboola-ex-google-drive-50811458.Osobni-investice-Data-input",
+          "destination": "DATA_INPUT",
+          "where_column": "",
+          "where_values": [],
+          "where_operator": "eq",
+          "columns": [],
+          "keep_internal_timestamp_column": false
+        }
+      ]
+    },
+    "output": {
+      "tables": [
+        {
+          "destination": "out.c-investice.PORTFOLIO",
+          "source": "PORTFOLIO_PART_2"
+        },
+        {
+          "destination": "out.c-investice.TRANSAKCE_DATA",
+          "source": "TRANSAKCE_DATA"
+        }
+      ]
+    }
+  }
+}

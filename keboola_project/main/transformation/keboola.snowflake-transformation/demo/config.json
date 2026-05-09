@@ -1,0 +1,30 @@
+{
+  "parameters": {},
+  "storage": {
+    "output": {
+      "data_type_support": "authoritative"
+    },
+    "input": {
+      "tables": [
+        {
+          "source": "{{:default-bucket:extractor/keboola.ex-gcalendar/my-google-calendar-data-source}}.calendars",
+          "destination": "calendars",
+          "where_column": "",
+          "where_values": [],
+          "where_operator": "eq",
+          "columns": [],
+          "keep_internal_timestamp_column": false
+        },
+        {
+          "source": "{{:default-bucket:extractor/keboola.ex-gcalendar/my-google-calendar-data-source}}.events",
+          "destination": "events",
+          "where_column": "",
+          "where_values": [],
+          "where_operator": "eq",
+          "columns": [],
+          "keep_internal_timestamp_column": false
+        }
+      ]
+    }
+  }
+}

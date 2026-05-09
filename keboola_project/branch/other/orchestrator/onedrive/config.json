@@ -1,0 +1,27 @@
+{
+  "crontabRecord": "15 22 * * 1",
+  "crontabTimezone": "Europe/Prague",
+  "token": {
+    "id": "782",
+    "description": "Orchestrator onedrive"
+  },
+  "active": true,
+  "tasks": [
+    {
+      "id": 28002,
+      "component": "keboola.ex-onedrive",
+      "componentUrl": null,
+      "action": "run",
+      "actionParameters": {
+        "config": "20365439"
+      },
+      "timeoutMinutes": null,
+      "active": true,
+      "continueOnFailure": false,
+      "phase": "New phase"
+    }
+  ],
+  "notifications": [],
+  "variableValuesId": null,
+  "variableValuesData": null
+}
