@@ -2,7 +2,10 @@ import Papa from 'papaparse';
 
 export const loadData = async () => {
   return new Promise((resolve, reject) => {
-    Papa.parse('/PORTFOLIO.csv', {
+    // V lokálním vývoji použijeme testovací soubor, na Vercelu živé API
+    const dataUrl = import.meta.env.DEV ? '/PORTFOLIO.csv' : '/api/portfolio';
+
+    Papa.parse(dataUrl, {
       download: true,
       header: false,
       skipEmptyLines: true,
