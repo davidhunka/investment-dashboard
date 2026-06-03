@@ -8,7 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Configuration parameters
-const API_HOST = 'queue.connection.north-europe.azure.keboola.com';
+const API_HOST = 'queue.north-europe.azure.keboola.com';
 const DATA_APP_CONFIG = '108811109'; // Config ID for my-data-app in project 67
 
 // Load token from environment or local .env file
@@ -129,6 +129,10 @@ async function main() {
     console.error('Please define KBC_TOKEN in your environment or inside a local .env file in the root directory.');
     process.exit(1);
   }
+
+  // Ensure spawned child processes inherit the Storage API Token
+  process.env.KBC_STORAGE_API_TOKEN = API_TOKEN;
+  process.env.KBC_TOKEN = API_TOKEN;
 
   try {
     // 1. Build React assets
