@@ -100,35 +100,10 @@
     {
       "branchId": 69,
       "componentId": "keboola.data-apps",
-      "id": "108811109",
-      "path": "app/keboola.data-apps/my-data-app",
-      "rows": []
-    },
-    {
-      "branchId": 69,
-      "componentId": "keboola.data-apps",
-      "id": "52468517",
-      "path": "app/keboola.data-apps/interactive-keboola-sheets-keboola-sheets-app-17q-v8rk8",
+      "id": "01kshevk5jgz7x0h3hyme2xfmv",
+      "path": "app/keboola.data-apps/portfolio-dashboard",
       "metadata": {
-        "KBC.KAC.templates.configId": "{\"idInTemplate\":\"data-app-interactive-keboola-sheets\"}",
-        "KBC.KAC.templates.configInputs": "[{\"input\":\"kbc_storage_token\",\"key\":\"parameters.dataApp.secrets.#kbc_storage_token\"}]",
-        "KBC.KAC.templates.instanceId": "17qV8rk8Ci7kBZdmnPEgBwcSR",
-        "KBC.KAC.templates.repository": "keboola",
-        "KBC.KAC.templates.templateId": "interactive-keboola-sheets"
-      },
-      "rows": []
-    },
-    {
-      "branchId": 69,
-      "componentId": "keboola.data-apps",
-      "id": "52468621",
-      "path": "app/keboola.data-apps/data-app-kai-sql-bot-rt8-yoyvh",
-      "metadata": {
-        "KBC.KAC.templates.configId": "{\"idInTemplate\":\"data-app-kai-sql-bot\"}",
-        "KBC.KAC.templates.configInputs": "[{\"input\":\"data-apps-data-app-secrets-openai-api-key\",\"key\":\"parameters.dataApp.secrets.#OPENAI_API_KEY\"},{\"input\":\"data-apps-data-app-secrets-password\",\"key\":\"parameters.dataApp.secrets.#password\"},{\"input\":\"data-apps-data-app-secrets-account-identifier\",\"key\":\"parameters.dataApp.secrets.account_identifier\"},{\"input\":\"data-apps-data-app-secrets-database-name\",\"key\":\"parameters.dataApp.secrets.database_name\"},{\"input\":\"data-apps-data-app-secrets-schema-name\",\"key\":\"parameters.dataApp.secrets.schema_name\"},{\"input\":\"data-apps-data-app-secrets-role-name\",\"key\":\"parameters.dataApp.secrets.user\"},{\"input\":\"data-apps-data-app-secrets-warehouse-name\",\"key\":\"parameters.dataApp.secrets.warehouse_name\"}]",
-        "KBC.KAC.templates.instanceId": "rt8YOYVHpdy1gBMSDlaVtqLrF",
-        "KBC.KAC.templates.repository": "keboola",
-        "KBC.KAC.templates.templateId": "kai-sql-bot"
+        "KBC.MCP.createdBy": "true"
       },
       "rows": []
     },
@@ -181,8 +156,11 @@
     {
       "branchId": 69,
       "componentId": "keboola.flow",
-      "id": "01k3nrsgftwt82fmbg9qwd01yb",
-      "path": "other/keboola.flow/new-flow",
+      "id": "01kt7bcq52m01qh1nfvy8f8pct",
+      "path": "other/keboola.flow/investice",
+      "metadata": {
+        "KBC.MCP.createdBy": "true"
+      },
       "rows": []
     },
     {
@@ -194,46 +172,13 @@
     },
     {
       "branchId": 69,
-      "componentId": "keboola.orchestrator",
-      "id": "24956385",
-      "path": "other/keboola.orchestrator/investice",
-      "rows": []
-    },
-    {
-      "branchId": 69,
-      "componentId": "keboola.orchestrator",
-      "id": "52468518",
-      "path": "other/keboola.orchestrator/flow-keboola-sheets-app-17q-v8rk8",
-      "metadata": {
-        "KBC.KAC.templates.configId": "{\"idInTemplate\":\"flow-interactive-keboola-sheets\"}",
-        "KBC.KAC.templates.instanceId": "17qV8rk8Ci7kBZdmnPEgBwcSR",
-        "KBC.KAC.templates.repository": "keboola",
-        "KBC.KAC.templates.templateId": "interactive-keboola-sheets"
-      },
-      "rows": []
-    },
-    {
-      "branchId": 69,
-      "componentId": "keboola.orchestrator",
-      "id": "52468622",
-      "path": "other/keboola.orchestrator/flow-kai-sql-bot-rt8-yoyvh",
-      "metadata": {
-        "KBC.KAC.templates.configId": "{\"idInTemplate\":\"flow-kai-sql-bot\"}",
-        "KBC.KAC.templates.instanceId": "rt8YOYVHpdy1gBMSDlaVtqLrF",
-        "KBC.KAC.templates.repository": "keboola",
-        "KBC.KAC.templates.templateId": "kai-sql-bot"
-      },
-      "rows": []
-    },
-    {
-      "branchId": 69,
       "componentId": "keboola.scheduler",
-      "id": "24956387",
-      "path": "schedules/investice",
+      "id": "01kt7btsa26ryj68y9yn831bbf",
+      "path": "schedules/scheduler-for-01kt7bcq52m01qh1nfvy8f8pct",
       "relations": [
         {
-          "componentId": "keboola.orchestrator",
-          "configId": "24956385",
+          "componentId": "keboola.flow",
+          "configId": "01kt7bcq52m01qh1nfvy8f8pct",
           "type": "schedulerFor"
         }
       ],
@@ -251,6 +196,10 @@
       "componentId": "keboola.snowflake-transformation",
       "id": "15402",
       "path": "transformation/keboola.snowflake-transformation/investice",
+      "metadata": {
+        "KBC.MCP.updatedBy.version.73": "true",
+        "KBC.MCP.updatedBy.version.74": "true"
+      },
       "rows": []
     },
     {
@@ -265,6 +214,10 @@
       "componentId": "keboola.wr-snowflake-blob-storage",
       "id": "7235533",
       "path": "writer/keboola.wr-snowflake-blob-storage/my-snowflake-data-destination",
+      "metadata": {
+        "KBC.MCP.updatedBy.version.2": "true",
+        "KBC.MCP.updatedBy.version.3": "true"
+      },
       "rows": [
         {
           "id": "12594182",

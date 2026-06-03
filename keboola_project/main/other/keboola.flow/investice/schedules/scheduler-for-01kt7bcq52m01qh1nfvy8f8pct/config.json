@@ -1,7 +1,7 @@
 {
   "schedule": {
-    "cronTab": "0 12 * * 1",
-    "timezone": "Europe/Prague",
+    "cronTab": "0 9 * * 1",
+    "timezone": "UTC",
     "state": "enabled"
   },
   "target": {

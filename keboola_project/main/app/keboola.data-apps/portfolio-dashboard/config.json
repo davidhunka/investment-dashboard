@@ -2,7 +2,7 @@
   "parameters": {
     "autoSuspendAfterSeconds": 900,
     "dataApp": {
-      "slug": "my-data-app",
+      "slug": "portfolio-dashboard",
       "git": {
         "repository": "https://github.com/davidhunka/investment-dashboard.git",
         "private": true,
@@ -10,7 +10,7 @@
         "branch": "main"
       }
     },
-    "id": "108811110"
+    "id": "165491673"
   },
   "authorization": {
     "app_proxy": {

@@ -1,9 +1,0 @@
-{
-  "name": "keboola.data-apps-52468517",
-  "enabled": true,
-  "continueOnFailure": false,
-  "task": {
-    "mode": "run",
-    "configPath": "app/keboola.data-apps/interactive-keboola-sheets-keboola-sheets-app-17q-v8rk8"
-  }
-}

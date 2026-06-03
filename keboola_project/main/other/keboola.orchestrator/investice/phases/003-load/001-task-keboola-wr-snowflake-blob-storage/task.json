@@ -1,9 +1,0 @@
-{
-  "name": "Task keboola.wr-snowflake-blob-storage",
-  "enabled": true,
-  "task": {
-    "mode": "run",
-    "configPath": "writer/keboola.wr-snowflake-blob-storage/my-snowflake-data-destination"
-  },
-  "continueOnFailure": false
-}
