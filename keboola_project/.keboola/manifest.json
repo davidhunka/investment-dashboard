@@ -100,6 +100,13 @@
     {
       "branchId": 69,
       "componentId": "keboola.data-apps",
+      "id": "01KT7CWT4YFXW1M1VA2HD124A5",
+      "path": "app/keboola.data-apps/investment-dashboard-app",
+      "rows": []
+    },
+    {
+      "branchId": 69,
+      "componentId": "keboola.data-apps",
       "id": "01kshevk5jgz7x0h3hyme2xfmv",
       "path": "app/keboola.data-apps/portfolio-dashboard",
       "metadata": {

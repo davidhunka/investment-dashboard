@@ -3,13 +3,23 @@
     "autoSuspendAfterSeconds": 900,
     "dataApp": {
       "slug": "portfolio-dashboard",
-      "git": {
-        "repository": "https://github.com/davidhunka/investment-dashboard.git",
-        "private": true,
-        "username": "davidhunka",
-        "branch": "main"
+      "streamlit": {
+        "config.toml": "[theme]\nfont = \"sans serif\"\ntextColor = \"#222529\"\nbackgroundColor = \"#FFFFFF\"\nsecondaryBackgroundColor = \"#E6F2FF\"\nprimaryColor = \"#1F8FFF\""
+      },
+      "secrets": {
+        "WORKSPACE_ID": "104540904",
+        "BRANCH_ID": "69"
       }
     },
+    "script": [
+      "# ### INJECTED_CODE ####\n# ### QUERY DATA FUNCTION ####\nimport os\nimport time\n\nimport httpx\nimport pandas as pd\n\n_RESULTS_PAGE_SIZE = 500\n\n\ndef query_data(query: str) -> pd.DataFrame:\n    branch_id = os.environ.get('BRANCH_ID')\n    workspace_id = os.environ.get('WORKSPACE_ID')\n    token = os.environ.get('KBC_TOKEN')\n    kbc_url = os.environ.get('KBC_URL')\n\n    if not branch_id or not workspace_id or not token or not kbc_url:\n        raise RuntimeError('Missing required environment variables: BRANCH_ID, WORKSPACE_ID, KBC_TOKEN, KBC_URL.')\n\n    query_service_url = kbc_url.replace('connection.', 'query.', 1).rstrip('/') + '/api/v1'\n\n    # Support both bearer tokens and storage tokens\n    if token.startswith('Bearer '):\n        headers = {\n            'Authorization': token,\n            'Accept': 'application/json',\n        }\n    else:\n        headers = {\n            'X-StorageAPI-Token': token,\n            'Accept': 'application/json',\n        }\n\n    timeout = httpx.Timeout(connect=10.0, read=60.0, write=10.0, pool=None)\n    limits = httpx.Limits(max_keepalive_connections=5, max_connections=10)\n    with httpx.Client(timeout=timeout, limits=limits) as client:\n        response = client.post(\n            f'{query_service_url}/branches/{branch_id}/workspaces/{workspace_id}/queries',\n            json={'statements': [query]},\n            headers=headers,\n        )\n        response.raise_for_status()\n        submission = response.json()\n        job_id = submission.get('queryJobId')\n        if not job_id:\n            raise RuntimeError('Query Service did not return a job identifier.')\n\n        start_ts = time.monotonic()\n        while True:\n            status_response = client.get(\n                f'{query_service_url}/queries/{job_id}',\n                headers=headers,\n            )\n            status_response.raise_for_status()\n            job_info = status_response.json()\n            status = job_info.get('status')\n            if status in {'completed', 'failed', 'canceled'}:\n                break\n            if time.monotonic() - start_ts > 300:  # 5 minutes\n                raise TimeoutError(f'Timed out waiting for query \"{job_id}\" to finish.')\n            time.sleep(1)\n\n        statements = job_info.get('statements') or []\n        if not statements:\n            raise RuntimeError('Query Service returned no statements for the executed query.')\n        statement_id = statements[0]['id']\n\n        columns: list[str] = []\n        all_rows: list[list[str]] = []\n        offset = 0\n        total_rows = None\n\n        while True:\n            results_response = client.get(\n                f'{query_service_url}/queries/{job_id}/{statement_id}/results',\n                headers=headers,\n                params={'offset': offset, 'pageSize': _RESULTS_PAGE_SIZE},\n            )\n            results_response.raise_for_status()\n            results = results_response.json()\n\n            if results.get('status') != 'completed':\n                raise ValueError(f'Error when executing query \"{query}\": {results.get(\"message\")}.')\n\n            if not columns:\n                columns = [col['name'] for col in results.get('columns', [])]\n                total_rows = results.get('numberOfRows')\n\n            page_rows = results.get('data', [])\n            if not page_rows:\n                break\n\n            all_rows.extend(page_rows)\n            offset += len(page_rows)\n\n            if total_rows is not None:\n                if offset >= total_rows:\n                    break\n            elif len(page_rows) < _RESULTS_PAGE_SIZE:\n                break\n\n        data_rows = [{col_name: value for col_name, value in zip(columns, row)} for row in all_rows]\n        return pd.DataFrame(data_rows)\n\n\n# ### END_OF_INJECTED_CODE ####\n\nimport streamlit as st\nimport pandas as pd\nimport plotly.express as px\nimport plotly.graph_objects as go\n\nst.set_page_config(page_title=\"Portfolio Dashboard\", page_icon=\"📈\", layout=\"wide\")\nst.title(\"📈 Investiční Portfolio Dashboard\")\n\n# Load data\n@st.cache_data(ttl=300)\ndef load_data():\n    df = query_data('''\n        SELECT \n            \"DATUM_SNAPSHOTU\",\n            \"OBDOBI\",\n            \"TYP_INVESTICE\",\n            \"HODNOTA\",\n            \"PRIRUSTEK_OPROTI_OBDOBI_PRED_MESICEM\",\n            \"ZISK_OPROTI_OBDOBI_PRED_MESICEM\",\n            \"ZISK_OPROTI_OBDOBI_PRED_ROKEM\",\n            \"ZISK_ODJAKZIVA\",\n            \"PODIL_MESICNIHO_ZISKU_OPROTI_CELKOVE_HODNOTE\",\n            \"PODIL_ROCNIHO_ZISKU_OPROTI_CELKOVE_HODNOTE\"\n        FROM \"KEBOOLA_67\".\"out.c-investice\".\"PORTFOLIO\"\n        ORDER BY \"OBDOBI\", \"TYP_INVESTICE\"\n    ''')\n    # Convert types\n    for col in [\"OBDOBI\", \"HODNOTA\", \"PRIRUSTEK_OPROTI_OBDOBI_PRED_MESICEM\", \n                \"ZISK_OPROTI_OBDOBI_PRED_MESICEM\", \"ZISK_OPROTI_OBDOBI_PRED_ROKEM\", \"ZISK_ODJAKZIVA\"]:\n        df[col] = pd.to_numeric(df[col], errors=\"coerce\").fillna(0)\n    for col in [\"PODIL_MESICNIHO_ZISKU_OPROTI_CELKOVE_HODNOTE\", \"PODIL_ROCNIHO_ZISKU_OPROTI_CELKOVE_HODNOTE\"]:\n        df[col] = pd.to_numeric(df[col], errors=\"coerce\").fillna(0)\n    return df\n\ndf = load_data()\nmax_obdobi = int(df[\"OBDOBI\"].max())\ncurrent = df[df[\"OBDOBI\"] == max_obdobi]\n\n# Metrics\ncol1, col2, col3, col4 = st.columns(4)\ntotal_value = current[\"HODNOTA\"].sum()\nmonthly_profit = current[\"ZISK_OPROTI_OBDOBI_PRED_MESICEM\"].sum()\nyearly_profit = current[\"ZISK_OPROTI_OBDOBI_PRED_ROKEM\"].sum()\ntotal_profit = current[\"ZISK_ODJAKZIVA\"].sum()\n\ncol1.metric(\"Celková hodnota\", f\"{total_value:,.0f} CZK\")\ncol2.metric(\"Zisk za měsíc\", f\"{monthly_profit:,.0f} CZK\", delta=f\"{monthly_profit:,.0f}\")\ncol3.metric(\"Zisk za rok\", f\"{yearly_profit:,.0f} CZK\", delta=f\"{yearly_profit:,.0f}\")\ncol4.metric(\"Celkový zisk\", f\"{total_profit:,.0f} CZK\")\n\nst.divider()\n\n# Charts\nleft, right = st.columns(2)\n\nwith left:\n    st.subheader(\"Vývoj portfolia v čase\")\n    portfolio_trend = df.groupby(\"OBDOBI\").agg({\"HODNOTA\": \"sum\"}).reset_index()\n    fig1 = px.area(portfolio_trend, x=\"OBDOBI\", y=\"HODNOTA\", \n                   labels={\"OBDOBI\": \"Období\", \"HODNOTA\": \"Hodnota (CZK)\"},\n                   color_discrete_sequence=[\"#1f77b4\"])\n    fig1.update_layout(hovermode=\"x unified\")\n    st.plotly_chart(fig1, use_container_width=True)\n\nwith right:\n    st.subheader(\"Složení portfolia\")\n    fig2 = px.pie(current, values=\"HODNOTA\", names=\"TYP_INVESTICE\", \n                  hole=0.4, color_discrete_sequence=px.colors.qualitative.Set2)\n    fig2.update_traces(textposition=\"inside\", textinfo=\"percent+label\")\n    st.plotly_chart(fig2, use_container_width=True)\n\nst.divider()\n\n# Investment selector\nst.subheader(\"Detail investice\")\nselected = st.selectbox(\"Vyberte investici:\", df[\"TYP_INVESTICE\"].unique())\ninv_data = df[df[\"TYP_INVESTICE\"] == selected]\n\ncol1, col2 = st.columns(2)\nwith col1:\n    fig3 = px.line(inv_data, x=\"OBDOBI\", y=\"HODNOTA\", \n                   title=f\"Vývoj hodnoty: {selected}\",\n                   labels={\"OBDOBI\": \"Období\", \"HODNOTA\": \"Hodnota (CZK)\"},\n                   markers=True)\n    st.plotly_chart(fig3, use_container_width=True)\n\nwith col2:\n    fig4 = px.bar(inv_data, x=\"OBDOBI\", y=\"ZISK_OPROTI_OBDOBI_PRED_MESICEM\",\n                  title=f\"Měsíční zisk: {selected}\",\n                  labels={\"OBDOBI\": \"Období\", \"ZISK_OPROTI_OBDOBI_PRED_MESICEM\": \"Zisk (CZK)\"},\n                  color=\"ZISK_OPROTI_OBDOBI_PRED_MESICEM\",\n                  color_continuous_scale=[\"red\", \"gray\", \"green\"],\n                  color_continuous_midpoint=0)\n    fig4.update_layout(coloraxis_showscale=False)\n    st.plotly_chart(fig4, use_container_width=True)\n\nst.divider()\n\n# Performance table\nst.subheader(\"Přehled výkonnosti\")\nperf = current[[\"TYP_INVESTICE\", \"HODNOTA\", \"ZISK_OPROTI_OBDOBI_PRED_MESICEM\", \n                \"ZISK_OPROTI_OBDOBI_PRED_ROKEM\", \"ZISK_ODJAKZIVA\"]].copy()\nperf.columns = [\"Investice\", \"Hodnota\", \"Zisk/měsíc\", \"Zisk/rok\", \"Zisk celkem\"]\nperf = perf.sort_values(\"Hodnota\", ascending=False)\nst.dataframe(perf.style.format({\"Hodnota\": \"{:,.0f}\", \"Zisk/měsíc\": \"{:,.0f}\", \n                                 \"Zisk/rok\": \"{:,.0f}\", \"Zisk celkem\": \"{:,.0f}\"}),\n             use_container_width=True, hide_index=True)\n\nst.caption(\"Data se aktualizují každých 5 minut. Poslední aktualizace: \" + pd.Timestamp.now().strftime(\"%Y-%m-%d %H:%M\"))\n"
+    ],
+    "packages": [
+      "httpx",
+      "pandas",
+      "plotly",
+      "streamlit"
+    ],
     "id": "165491673"
   },
   "authorization": {
@@ -32,21 +42,7 @@
       ]
     }
   },
-  "storage": {
-    "input": {
-      "tables": [
-        {
-          "source": "out.c-investice.PORTFOLIO",
-          "destination": "PORTFOLIO.csv",
-          "where_column": "",
-          "where_values": [],
-          "where_operator": "eq",
-          "columns": [],
-          "keep_internal_timestamp_column": false
-        }
-      ]
-    }
-  },
+  "storage": [],
   "runtime": {
     "backend": {
       "size": "tiny"
