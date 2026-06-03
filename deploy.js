@@ -9,7 +9,7 @@ const __dirname = path.dirname(__filename);
 
 // Configuration parameters
 const API_HOST = 'queue.north-europe.azure.keboola.com';
-const DATA_APP_CONFIG = '01KT7CWT4YFXW1M1VA2HD124A5'; // Config ID for investment-dashboard-app in project 67
+const DATA_APP_CONFIG = '01kshevk5jgz7x0h3hyme2xfmv'; // Config ID for portfolio-dashboard in project 67
 
 // Load token from environment or local .env file
 let API_TOKEN = process.env.KBC_TOKEN || '';
@@ -155,6 +155,7 @@ async function main() {
     // 3. Keboola CLI Push
     console.log('\n☁️ Phase 3: Validating and pushing Keboola CLI configurations...');
     try {
+      runCmd('kbc local encrypt', projectDir);
       runCmd('kbc local validate', projectDir);
       runCmd('kbc sync push', projectDir);
       console.log('✓ Keboola CLI sync push completed.');
