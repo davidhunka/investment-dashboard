@@ -1,0 +1,8 @@
+#!/bin/bash
+echo "=== Starting Keboola Data App Setup ==="
+cd /app/data-app
+echo "Installing Node.js dependencies..."
+npm install
+echo "Building production bundles..."
+npm run build
+echo "=== Setup Completed successfully! ==="

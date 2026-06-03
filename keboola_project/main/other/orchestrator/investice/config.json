@@ -58,6 +58,19 @@
       "active": true,
       "continueOnFailure": false,
       "phase": "New phase 3"
+    },
+    {
+      "id": 11039877,
+      "component": "keboola.data-apps",
+      "componentUrl": null,
+      "action": "run",
+      "actionParameters": {
+        "config": "108811109"
+      },
+      "timeoutMinutes": null,
+      "active": true,
+      "continueOnFailure": false,
+      "phase": "New phase 4"
     }
   ],
   "notifications": [
