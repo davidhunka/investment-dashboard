@@ -9,7 +9,7 @@ const __dirname = path.dirname(__filename);
 
 // Configuration parameters
 const API_HOST = 'queue.north-europe.azure.keboola.com';
-const DATA_APP_CONFIG = '01kshevk5jgz7x0h3hyme2xfmv'; // Config ID for portfolio-dashboard in project 67
+const DATA_APP_CONFIG = '01kt7h6shqgxanh1y36ab5tr7t'; // Config ID for investment-dashboard in project 67
 
 // Load token from environment or local .env file
 let API_TOKEN = process.env.KBC_TOKEN || '';

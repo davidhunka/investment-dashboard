@@ -100,11 +100,8 @@
     {
       "branchId": 69,
       "componentId": "keboola.data-apps",
-      "id": "01kshevk5jgz7x0h3hyme2xfmv",
-      "path": "app/keboola.data-apps/portfolio-dashboard",
-      "metadata": {
-        "KBC.MCP.createdBy": "true"
-      },
+      "id": "01kt7h6shqgxanh1y36ab5tr7t",
+      "path": "app/keboola.data-apps/investment-dashboard",
       "rows": []
     },
     {
