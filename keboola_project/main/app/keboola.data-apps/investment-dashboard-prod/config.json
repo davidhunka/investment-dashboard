@@ -50,7 +50,7 @@
   },
   "runtime": {
     "backend": {
-      "size": "tiny"
+      "size": "small"
     }
   }
 }
