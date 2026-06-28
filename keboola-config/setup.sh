@@ -1,4 +1,8 @@
 #!/bin/sh
-echo "=== Starting Keboola Data App Setup ==="
-echo "Express production dependencies are pre-packaged in Git. Skipping npm install."
-echo "=== Setup Completed successfully! ==="
+if command -v python3 >/dev/null 2>&1; then
+    python3 /app/keboola-config/setup.py
+elif command -v python >/dev/null 2>&1; then
+    python /app/keboola-config/setup.py
+else
+    echo "Python not found! Cannot run setup.py diagnostics"
+fi
