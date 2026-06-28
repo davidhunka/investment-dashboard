@@ -135,11 +135,13 @@ async function main() {
   process.env.KBC_TOKEN = API_TOKEN;
 
   try {
-    // 1. Build React assets
-    console.log('\n📦 Phase 1: Compiling React static assets...');
+    // 1. Build React assets & package dependencies
+    console.log('\n📦 Phase 1: Compiling React static assets & packaging node_modules...');
     const npmCmd = process.platform === 'win32' ? 'npm.cmd' : 'npm';
+    runCmd(`${npmCmd} install --legacy-peer-deps`, dataAppDir);
     runCmd(`${npmCmd} run build`, dataAppDir);
-    console.log('✓ React compiled.');
+    runCmd(`${npmCmd} prune --omit=dev --legacy-peer-deps`, dataAppDir);
+    console.log('✓ React compiled & node_modules prepared for packaging.');
 
     // 2. Git Commit & Push
     console.log('\n🐙 Phase 2: Committing and pushing modifications to GitHub...');
