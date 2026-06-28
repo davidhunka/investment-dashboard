@@ -24,6 +24,9 @@ const PORT = process.env.PORT || 8080;
 app.use(cors());
 app.use(express.json());
 
+// Handle Keboola startup POST/GET checks on /
+app.all('/', (req, res) => res.send('OK'));
+
 // Path to Keboola Connection input tables
 const KEBOOLA_TABLES_DIR = '/data/in/tables';
 const LOCAL_MOCK_PATH = path.join(__dirname, 'public', 'PORTFOLIO.csv');

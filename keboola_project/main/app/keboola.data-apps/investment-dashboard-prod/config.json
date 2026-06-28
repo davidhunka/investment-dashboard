@@ -2,15 +2,16 @@
   "parameters": {
     "autoSuspendAfterSeconds": 900,
     "dataApp": {
-      "slug": "investment-dashboard",
+      "slug": "investment-dashboard-prod",
       "git": {
         "repository": "https://github.com/davidhunka/investment-dashboard.git",
         "private": true,
         "username": "davidhunka",
-        "#password": "KBC::ProjectSecureKV::eJwB6wAU/2E6Mzp7aToyO3M6MTI0OiLe9QIAR2btJKaU5+kCIoAZlVFnywzS74aRJquRA/r4hugGvbIU6wa3J2OINGjar7YPu/PkwCG2/yx90XMiLBFjfaVBydFrpJ0PtmBLMFwAD3aRBmxJSEajVT1/zZK1OCwTTSXIa//cArsOHpUKiiiHLOL+YVQSi6b8+6JSIjtpOjM7czozNjoiNWI3NGVkNGUtMmMyNy00NDQxLWFhNTgtMjUxNmMxY2I4YjFkIjtpOjQ7czozMjoiOGM0MDAxOWQ5MThhNDE2ODg4MWQzZWVhMDU1N2VmYzIiO32dpVcs",
+        "#password": "KBC::ProjectSecureKV::eJwB6wAU/2E6Mzp7aToyO3M6MTI0OiLe9QIA8acBBuA7mHHGvOofo1H7H2sQoUiOCfnYTr4hcfIl5FzhXiDX9d2roflE+P8Z7A8pKeo/x4poouy28658RdNzlZXV42mtrEQWoCc75yzAjIwmiezj8YAL24uBw7lqvWvldc7L2Dzzh/Gxcfc+xdFlChdmhgMRoVhJIjtpOjM7czozNjoiNGZlNTM5NmItYzA1Yi00NDUyLWE5YTctZTIxMGUyZWE3NzgwIjtpOjQ7czozMjoiMTE0OTgwZDRjOTJjNGRiNGJjMmViYzcxZDE1Y2VmNmYiO33k02EH",
         "branch": "main"
       }
-    }
+    },
+    "id": "165491877"
   },
   "authorization": {
     "app_proxy": {
