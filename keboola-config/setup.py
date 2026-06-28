@@ -8,9 +8,15 @@ import time
 STORAGE_TOKEN = "67-324-tgyGN1yOzYuKF6DfZ5gXLzsCHE2o5VRj16tacaGW"
 API_URL = "https://connection.north-europe.azure.keboola.com/v2/storage/events"
 
+diag_logs = []
+
 def log_to_keboola(message, status="info"):
-    print(f"[{status.upper()}] {message}")
+    formatted = f"[{status.upper()}] {message}"
+    print(formatted)
     sys.stdout.flush()
+    diag_logs.append(formatted)
+    
+    # Still attempt to log to Storage events just in case resolving the URL works
     try:
         req = urllib.request.Request(
             API_URL,
@@ -24,10 +30,10 @@ def log_to_keboola(message, status="info"):
                 "Content-Type": "application/json"
             }
         )
-        with urllib.request.urlopen(req) as response:
+        with urllib.request.urlopen(req, timeout=2) as response:
             pass
-    except Exception as e:
-        print(f"Failed to log to Keboola: {e}")
+    except Exception:
+        pass
 
 log_to_keboola("Starting debug diagnostics inside container setup.py...")
 
@@ -50,36 +56,44 @@ try:
             
     if not node_path:
         log_to_keboola("Node.js not found in any standard paths!", "error")
-        sys.exit(1)
-        
-    # 2. Try running server.js in background
-    os.chdir("/app/data-app")
-    log_to_keboola("Starting server.js in background...")
-    
-    proc = subprocess.Popen(
-        [node_path, "server.js"],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        text=True,
-        env=dict(os.environ, PORT="3000", NODE_ENV="production")
-    )
-    
-    # Wait 6 seconds
-    time.sleep(6)
-    
-    # Check if process is still running
-    poll = proc.poll()
-    if poll is None:
-        log_to_keboola("Node server.js is STILL RUNNING successfully in background after 6 seconds!")
-        # Terminate it so it doesn't block the port
-        proc.terminate()
     else:
-        stdout, stderr = proc.communicate()
-        log_to_keboola(f"Node server.js CRASHED immediately with code {poll}!", "error")
-        log_to_keboola(f"STDOUT: {stdout}", "error")
-        log_to_keboola(f"STDERR: {stderr}", "error")
+        # 2. Try running server.js in background
+        os.chdir("/app/data-app")
+        log_to_keboola("Starting server.js in background...")
+        
+        proc = subprocess.Popen(
+            [node_path, "server.js"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            env=dict(os.environ, PORT="3000", NODE_ENV="production")
+        )
+        
+        # Wait 6 seconds
+        time.sleep(6)
+        
+        # Check if process is still running
+        poll = proc.poll()
+        if poll is None:
+            log_to_keboola("Node server.js is STILL RUNNING successfully in background after 6 seconds!")
+            # Terminate it so it doesn't block the port
+            proc.terminate()
+        else:
+            stdout, stderr = proc.communicate()
+            log_to_keboola(f"Node server.js CRASHED immediately with code {poll}!", "error")
+            log_to_keboola(f"STDOUT: {stdout}", "error")
+            log_to_keboola(f"STDERR: {stderr}", "error")
         
 except Exception as e:
     log_to_keboola(f"Exception in setup.py: {e}", "error")
 
-log_to_keboola("Setup diagnostics completed.")
+log_to_keboola("Setup diagnostics completed. Writing log file to output storage...")
+
+# Write logs to diag_output.txt for output mapping
+try:
+    os.makedirs("/data/out/files", exist_ok=True)
+    with open("/data/out/files/diag_output.txt", "w") as f:
+        f.write("\n".join(diag_logs))
+    print("Successfully wrote diag_output.txt to /data/out/files/")
+except Exception as e:
+    print(f"Failed to write log file: {e}")
