@@ -46,16 +46,6 @@
           "keep_internal_timestamp_column": false
         }
       ]
-    },
-    "output": {
-      "files": [
-        {
-          "source": "diag_output.txt",
-          "tags": [
-            "diagnostic-logs"
-          ]
-        }
-      ]
     }
   },
   "runtime": {

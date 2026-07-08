@@ -61,7 +61,7 @@ app.get('*', (req, res) => {
 });
 
 // Start Server
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`==================================================================`);
   console.log(`📊 Keboola JS Data App Backend successfully running on port ${PORT}`);
   console.log(`🚀 Mount Folder checked: ${KEBOOLA_TABLES_DIR}`);
