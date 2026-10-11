@@ -70,39 +70,123 @@ function App() {
 
   // Chart configs
   const mainChartOption = {
-    tooltip: { trigger: 'axis' },
-    grid: { left: '1%', right: '8%', bottom: '3%', containLabel: true },
-    xAxis: { type: 'category', data: agg.ts.map(d => d.date), boundaryGap: false, splitLine: { show: false } },
-    yAxis: { type: 'value', splitLine: { lineStyle: { color: 'rgba(255,255,255,0.05)' } }, axisLabel: { formatter: (val) => formatCZK(val) } },
-    series: [{
-      data: agg.ts.map((d, i) => {
-        if (i === agg.ts.length - 1) {
-          return {
-            value: d.value,
-            label: {
-              show: true,
-              position: 'top',
-              color: '#38bdf8',
-              fontSize: 14,
-              fontWeight: 'bold',
-              formatter: () => formatCZK(d.value)
-            }
-          };
-        }
-        return d.value;
-      }),
-      type: 'line',
-      smooth: true,
-      symbol: 'circle',
-      symbolSize: 8,
-      itemStyle: { color: '#38bdf8' },
-      areaStyle: {
-        color: {
-          type: 'linear', x: 0, y: 0, x2: 0, y2: 1,
-          colorStops: [{ offset: 0, color: 'rgba(56, 189, 248, 0.4)' }, { offset: 1, color: 'rgba(56, 189, 248, 0.01)' }]
-        }
+    tooltip: {
+      trigger: 'axis',
+      backgroundColor: 'rgba(15, 23, 42, 0.9)',
+      borderColor: '#334155',
+      textStyle: { color: '#f8fafc' },
+      formatter: (params) => {
+        if (!params || !params.length) return '';
+        let rel = `<div style="font-weight:bold;margin-bottom:4px;color:#94a3b8">${params[0].axisValueLabel}</div>`;
+        params.forEach(p => {
+          const val = typeof p.value === 'object' ? p.value.value : p.value;
+          rel += `<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+            <span>${p.marker} ${p.seriesName}:</span>
+            <strong style="color:${p.color}">${formatCZK(val)}</strong>
+          </div>`;
+        });
+        return rel;
       }
-    }]
+    },
+    legend: {
+      data: ['Celková hodnota', 'Celkový zisk'],
+      textStyle: { color: '#94a3b8' },
+      top: 0,
+      right: '2%'
+    },
+    grid: { left: '1%', right: '12%', bottom: '3%', top: '14%', containLabel: true },
+    xAxis: { type: 'category', data: agg.ts.map(d => d.date), boundaryGap: false, splitLine: { show: false } },
+    yAxis: [
+      {
+        type: 'value',
+        name: 'Hodnota',
+        nameTextStyle: { color: '#38bdf8' },
+        splitLine: { lineStyle: { color: 'rgba(255,255,255,0.05)' } },
+        axisLabel: { formatter: (val) => formatCZK(val), color: '#94a3b8' }
+      },
+      {
+        type: 'value',
+        name: 'Zisk',
+        nameTextStyle: { color: '#34d399' },
+        splitLine: { show: false },
+        axisLabel: { formatter: (val) => formatCZK(val), color: '#34d399' }
+      }
+    ],
+    series: [
+      {
+        name: 'Celková hodnota',
+        type: 'line',
+        yAxisIndex: 0,
+        smooth: true,
+        symbol: 'circle',
+        symbolSize: 6,
+        showSymbol: true,
+        itemStyle: { color: '#38bdf8' },
+        areaStyle: {
+          color: {
+            type: 'linear', x: 0, y: 0, x2: 0, y2: 1,
+            colorStops: [{ offset: 0, color: 'rgba(56, 189, 248, 0.35)' }, { offset: 1, color: 'rgba(56, 189, 248, 0.01)' }]
+          }
+        },
+        data: agg.ts.map((d, i) => {
+          if (i === agg.ts.length - 1) {
+            return {
+              value: d.value,
+              label: {
+                show: true,
+                position: 'top',
+                distance: 8,
+                color: '#38bdf8',
+                fontSize: 12,
+                fontWeight: 'bold',
+                backgroundColor: 'rgba(15, 23, 42, 0.75)',
+                padding: [3, 6],
+                borderRadius: 4,
+                formatter: () => formatCZK(d.value)
+              }
+            };
+          }
+          return d.value;
+        })
+      },
+      {
+        name: 'Celkový zisk',
+        type: 'line',
+        yAxisIndex: 1,
+        smooth: true,
+        symbol: 'circle',
+        symbolSize: 6,
+        showSymbol: true,
+        itemStyle: { color: '#34d399' },
+        lineStyle: { width: 2, type: 'dashed' },
+        areaStyle: {
+          color: {
+            type: 'linear', x: 0, y: 0, x2: 0, y2: 1,
+            colorStops: [{ offset: 0, color: 'rgba(52, 211, 153, 0.25)' }, { offset: 1, color: 'rgba(52, 211, 153, 0.01)' }]
+          }
+        },
+        data: agg.ts.map((d, i) => {
+          if (i === agg.ts.length - 1) {
+            return {
+              value: d.profit,
+              label: {
+                show: true,
+                position: 'bottom',
+                distance: 8,
+                color: '#34d399',
+                fontSize: 12,
+                fontWeight: 'bold',
+                backgroundColor: 'rgba(15, 23, 42, 0.75)',
+                padding: [3, 6],
+                borderRadius: 4,
+                formatter: () => formatCZK(d.profit)
+              }
+            };
+          }
+          return d.profit;
+        })
+      }
+    ]
   };
 
   

@@ -1,0 +1,49 @@
+{
+  "parameters": {
+    "autoSuspendAfterSeconds": 900,
+    "dataApp": {
+      "slug": "investment-dashboard",
+      "git": {
+        "repository": "https://git.north-europe.azure.keboola.com/keboola/app-165492225.git",
+        "branch": "main",
+        "private": true
+      }
+    },
+    "id": "165492225"
+  },
+  "runtime": {
+    "workspace": {
+      "enabled": true
+    }
+  },
+  "authorization": {
+    "app_proxy": {
+      "auth_providers": [
+        {
+          "id": "simpleAuth",
+          "type": "password"
+        }
+      ],
+      "auth_rules": [
+        {
+          "type": "pathPrefix",
+          "value": "/",
+          "auth_required": true,
+          "auth": [
+            "simpleAuth"
+          ]
+        }
+      ]
+    }
+  },
+  "storage": {
+    "input": {
+      "tables": [
+        {
+          "source": "out.c-investice.PORTFOLIO",
+          "destination": "PORTFOLIO.csv"
+        }
+      ]
+    }
+  }
+}

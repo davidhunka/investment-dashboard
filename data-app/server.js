@@ -25,7 +25,6 @@ app.use(cors());
 app.use(express.json());
 
 // Handle Keboola startup POST/GET checks on /
-app.all('/', (req, res) => res.send('OK'));
 
 // Path to Keboola Connection input tables
 const KEBOOLA_TABLES_DIR = '/data/in/tables';

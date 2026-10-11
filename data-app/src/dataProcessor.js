@@ -1,11 +1,8 @@
 import Papa from 'papaparse';
 
 export const loadData = async () => {
-  return new Promise((resolve, reject) => {
-    // V lokálním vývoji použijeme testovací soubor, na Vercelu živé API
-    const dataUrl = import.meta.env.DEV ? '/PORTFOLIO.csv' : '/api/portfolio';
-
-    Papa.parse(dataUrl, {
+  const tryParse = (url) => new Promise((resolve, reject) => {
+    Papa.parse(url, {
       download: true,
       header: false,
       skipEmptyLines: true,
@@ -20,18 +17,25 @@ export const loadData = async () => {
           CELKOVY_ZISK: parseFloat(row[12]) || 0
         })).filter(row => !isNaN(row.DATUM_SNAPSHOTU.getTime()));
 
-        // Normalizace datumu na YYYY-MM
         parsed.forEach(row => {
           row.YEAR_MONTH = `${row.DATUM_SNAPSHOTU.getFullYear()}-${String(row.DATUM_SNAPSHOTU.getMonth() + 1).padStart(2, '0')}`;
         });
 
         resolve(parsed);
       },
-      error: (error) => {
-        reject(error);
-      }
+      error: reject
     });
   });
+
+  const primaryUrl = import.meta.env.DEV ? '/PORTFOLIO.csv' : '/api/portfolio';
+  try {
+    const data = await tryParse(primaryUrl);
+    if (data && data.length > 0) return data;
+    throw new Error('Empty data');
+  } catch (err) {
+    console.warn(`Data source ${primaryUrl} unavailable, falling back to /PORTFOLIO.csv:`, err);
+    return await tryParse('/PORTFOLIO.csv');
+  }
 };
 
 export const filterData = (data, selectedInvestments, monthsBack) => {
@@ -78,15 +82,21 @@ export const getAggregates = (data) => {
   });
   const totalRoi = totalMaxVklad > 0 ? (totalProfit / totalMaxVklad) * 100 : 0;
 
-  // Time series for total
-  const tsMap = {};
+  // Time series for total value and profit
+  const tsValueMap = {};
+  const tsProfitMap = {};
   data.forEach(d => {
-    if (!tsMap[d.YEAR_MONTH]) tsMap[d.YEAR_MONTH] = 0;
-    tsMap[d.YEAR_MONTH] += d.HODNOTA;
+    if (!tsValueMap[d.YEAR_MONTH]) {
+      tsValueMap[d.YEAR_MONTH] = 0;
+      tsProfitMap[d.YEAR_MONTH] = 0;
+    }
+    tsValueMap[d.YEAR_MONTH] += d.HODNOTA;
+    tsProfitMap[d.YEAR_MONTH] += d.CELKOVY_ZISK;
   });
   const ts = sortedDates.map(date => ({
     date,
-    value: tsMap[date] || 0
+    value: tsValueMap[date] || 0,
+    profit: tsProfitMap[date] || 0
   }));
 
   // Max Drawdown

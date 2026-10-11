@@ -105,6 +105,20 @@
       "componentId": "keboola.data-apps",
       "id": "01kw73zsnewb502qg2cvzdc0by",
       "path": "app/keboola.data-apps/investment-dashboard-prod",
+      "metadata": {
+        "KBC.MCP.updatedBy.version.9": "true"
+      },
+      "rows": []
+    },
+    {
+      "branchId": 69,
+      "componentId": "keboola.data-apps",
+      "id": "01kz6reck1mbwbcb7y78eb3s1x",
+      "path": "app/keboola.data-apps/investment-dashboard",
+      "metadata": {
+        "KBC.MCP.createdBy": "true",
+        "KBC.MCP.updatedBy.version.4": "true"
+      },
       "rows": []
     },
     {
@@ -159,7 +173,8 @@
       "id": "01kt7bcq52m01qh1nfvy8f8pct",
       "path": "other/keboola.flow/investice",
       "metadata": {
-        "KBC.MCP.createdBy": "true"
+        "KBC.MCP.createdBy": "true",
+        "KBC.MCP.updatedBy.version.2": "true"
       },
       "rows": []
     },
@@ -198,7 +213,9 @@
       "path": "transformation/keboola.snowflake-transformation/investice",
       "metadata": {
         "KBC.MCP.updatedBy.version.73": "true",
-        "KBC.MCP.updatedBy.version.74": "true"
+        "KBC.MCP.updatedBy.version.74": "true",
+        "KBC.MCP.updatedBy.version.76": "true",
+        "KBC.MCP.updatedBy.version.77": "true"
       },
       "rows": []
     },

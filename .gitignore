@@ -1,3 +1,6 @@
 .env
 kbc.exe
 kbc.zip
+
+*.code-workspace
+.DS_Store

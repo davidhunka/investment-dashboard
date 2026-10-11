@@ -12,17 +12,7 @@
     },
     {
       "id": "transform",
-      "name": "Transform",
-      "next": [
-        {
-          "id": "next-2",
-          "goto": "load"
-        }
-      ]
-    },
-    {
-      "id": "load",
-      "name": "Load"
+      "name": "Transform"
     }
   ],
   "tasks": [
@@ -30,6 +20,7 @@
       "id": "task-1",
       "name": "Google Drive Extractor",
       "phase": "extract",
+      "enabled": true,
       "task": {
         "type": "job",
         "componentId": "keboola.ex-google-drive",
@@ -41,21 +32,11 @@
       "id": "task-2",
       "name": "Snowflake Transformation",
       "phase": "transform",
+      "enabled": true,
       "task": {
         "type": "job",
         "componentId": "keboola.snowflake-transformation",
         "configId": "15402",
-        "mode": "run"
-      }
-    },
-    {
-      "id": "task-3",
-      "name": "Snowflake Writer",
-      "phase": "load",
-      "task": {
-        "type": "job",
-        "componentId": "keboola.wr-snowflake-blob-storage",
-        "configId": "7235533",
         "mode": "run"
       }
     }
