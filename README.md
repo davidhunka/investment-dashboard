@@ -1,37 +1,46 @@
 # 🚀 Osobní Investiční Dashboard
 
 Tento projekt slouží ke sledování výkonnosti a stavu soukromého investičního portfolia.
-Aplikace běží jako kontejnerizovaná **Keboola Connection Data App** na platformě Azure v oblasti North Europe.
+
+Aplikace běží **24/7 na platformě Vercel**, přičemž datové zpracování a ETL zajišťuje **Keboola Connection** (Azure North Europe, projekt ID 67).
 
 ---
 
 ## 🏗️ Architektura projektu
 
-Projekt se skládá ze tří hlavních částí:
+```
+[Google Drive: Osobní investice.gsheet]
+                  │
+                  ▼ (Automatický týdenní Keboola Flow)
+[Keboola Connection: Google Drive Extractor -> Snowflake SQL Transformace -> out.c-investice.PORTFOLIO]
+                  │
+                  ▼ (Storage API preview / token)
+[Vercel Serverless API: /api/portfolio (1h Edge Cache)]
+                  │
+                  ▼
+[React + Vite Frontend (Apache ECharts, Glassmorphism, 24/7 bez uspávání)]
+```
 
-### 1. `keboola_project/` (Backend / ETL & CLI Config)
-V této složce sídlí Keboola Connection CLI konfigurace (extrakce z OneDrive, Snowflake transformace, orchestrace a nastavení Data App).
-Data se zpracovávají přes ETL a výsledkem je soubor `PORTFOLIO.csv` namapovaný do vstupního úložiště Data App.
+### 1. Frontend & Hosting (Vercel)
+- **URL**: `https://investment-dashboard-bstkjoyhm-davidhunkas-projects.vercel.app` (a produkční alias)
+- **Stack**: Vite, React 19, Apache ECharts, Lucide icons, PapaParse
+- **Serverless API**: `data-app/api/portfolio.js` stahuje aktuální data z Keboola Storage a cachuje je na CDN.
 
-### 2. `data-app/` (React Frontend & Express Backend)
-Bleskově rychlá webová aplikace postavená na moderním stacku:
-- **Vite + React** – Frontend vykreslující interaktivní grafy přes Apache ECharts a ROI kalkulace.
-- **Express.js** – Lehký backend (`server.js`), který servíruje statické assety frontendu a zpřístupňuje data z Keboola Storage na endpointu `/api/portfolio`.
-- **Dockerfile** – Kontejnerizuje aplikaci pro běh v Keboola Connection cloudu.
-
-### 3. `deploy.js` (Nasazovací Pipeline)
-Integrační Node.js skript, který zautomatizuje celý nasazovací cyklus.
+### 2. Backend & ETL (Keboola Connection)
+- **Flow**: `01kt7bcq52m01qh1nfvy8f8pct` (Investice)
+- **Extrakce**: Google Drive Extractor `50811458` načítá list *Data input* ze souboru *Osobní investice*.
+- **Transformace**: Snowflake transformace `15402` počítá snapshoty, měsíční a roční zisky a ukládá je do `out.c-investice.PORTFOLIO`.
+- *Poznámka*: Původní Keboola Data App byla opuštěna kvůli pomalému startu a 15minutovému uspávání kontejnerů.
 
 ---
 
-## 💻 Jak spustit aplikaci lokálně
+## 💻 Lokální vývoj (Local Development)
 
-### 1. Spuštění frontendu ve vývojovém režimu (Vite Dev Server)
-1. Otevřete terminál ve složce `data-app`:
+1. Přejděte do složky `data-app`:
    ```bash
    cd data-app
    ```
-2. Nainstalujte závislosti:
+2. Nainstalujte závislosti (pokud ještě nemáte):
    ```bash
    npm install
    ```
@@ -39,38 +48,4 @@ Integrační Node.js skript, který zautomatizuje celý nasazovací cyklus.
    ```bash
    npm run dev
    ```
-Aplikace poběží na `http://localhost:5173/` s načítáním lokálních mock dat z `data-app/public/PORTFOLIO.csv`.
-
-### 2. Spuštění celého produkčního buildu lokálně (Express Server)
-Pokud chcete otestovat Express backend, sestavte aplikaci a spusťte produkční server:
-```bash
-cd data-app
-npm run build
-npm start
-```
-Aplikace poběží na portu `8080` (`http://localhost:8080/`).
-
----
-
-## 📈 Nasazení do Keboola Connection (Deployment)
-
-Pro nasazení změn do živé Keboola Data App slouží automatizovaný skript v kořeni projektu.
-
-### Příprava před prvním spuštěním:
-1. Vytvořte soubor `.env` v kořenovém adresáři projektu.
-2. Přidejte do něj svůj Keboola Storage API token:
-   ```env
-   KBC_TOKEN=tvuj-keboola-storage-api-token
-   ```
-
-### Spuštění nasazení:
-V terminálu v kořeni projektu spusťte:
-```bash
-node deploy.js
-```
-
-**Co skript provede:**
-1. Sestaví statické React soubory (`npm run build`).
-2. Uloží a odešle změny kódu do GitHub repozitáře (odkud si Keboola stahuje Docker build).
-3. Ověří a nahraje CLI konfigurace z `keboola_project/` do Kebooly (`kbc sync push`).
-4. Pomocí Keboola Queue API vyvolá restart a nové sestavení kontejneru Data App a monitoruje průběh úlohy do úspěšného konce.
+   Aplikace poběží na `http://localhost:5173/`. V lokálním režimu načítá data z `data-app/public/PORTFOLIO.csv`.
