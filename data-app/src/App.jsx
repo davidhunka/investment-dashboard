@@ -1,30 +1,33 @@
 import { useState, useEffect, useMemo } from 'react';
 import ReactECharts from 'echarts-for-react';
-import { loadData, filterData, getAggregates, formatCZK, getPivotData, getIndexedData } from './dataProcessor';
+import { loadData, filterData, getAggregates, formatCZK, getPivotData, getIndexedData, getInitialData } from './dataProcessor';
 import './index.css';
 
 const DEFAULT_HIDDEN = ["bonster", "coinbase", "zonky", "staveb"];
 
 function App() {
-  const [rawData, setRawData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [allInvestments, setAllInvestments] = useState([]);
+  const [rawData, setRawData] = useState(() => getInitialData());
+  const [allInvestments, setAllInvestments] = useState(() => {
+    const init = getInitialData();
+    return [...new Set(init.map(d => d.TYP_INVESTICE))].sort();
+  });
   
-  const [selectedInvestments, setSelectedInvestments] = useState([]);
+  const [selectedInvestments, setSelectedInvestments] = useState(() => {
+    const init = getInitialData();
+    const uniqueTypes = [...new Set(init.map(d => d.TYP_INVESTICE))].sort();
+    return uniqueTypes.filter(inv => !DEFAULT_HIDDEN.some(h => inv.toLowerCase().includes(h)));
+  });
   const [monthsBack, setMonthsBack] = useState(36);
 
   useEffect(() => {
     loadData().then(data => {
-      setRawData(data);
-      const uniqueTypes = [...new Set(data.map(d => d.TYP_INVESTICE))].sort();
-      setAllInvestments(uniqueTypes);
-      
-      const defaults = uniqueTypes.filter(inv => !DEFAULT_HIDDEN.some(h => inv.toLowerCase().includes(h)));
-      setSelectedInvestments(defaults);
-      setLoading(false);
+      if (data && data.length > 0) {
+        setRawData(data);
+        const uniqueTypes = [...new Set(data.map(d => d.TYP_INVESTICE))].sort();
+        setAllInvestments(uniqueTypes);
+      }
     }).catch(err => {
-      console.error(err);
-      setLoading(false);
+      console.warn('Background data sync failed, keeping initial data:', err);
     });
   }, []);
 
@@ -65,7 +68,7 @@ function App() {
     }
   };
 
-  if (loading) return <div style={{ color: '#f8fafc', padding: '2rem' }}>Načítám data...</div>;
+  if (!rawData || rawData.length === 0) return <div style={{ color: '#f8fafc', padding: '2rem' }}>Načítám data...</div>;
   if (!agg) return <div style={{ color: '#f8fafc', padding: '2rem' }}>Žádná data pro vybrané filtry.</div>;
 
   // Chart configs

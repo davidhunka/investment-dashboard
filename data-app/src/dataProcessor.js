@@ -1,41 +1,72 @@
 import Papa from 'papaparse';
+import fallbackCsv from '../public/PORTFOLIO.csv?raw';
 
-export const loadData = async () => {
-  const tryParse = (url) => new Promise((resolve, reject) => {
-    Papa.parse(url, {
-      download: true,
-      header: false,
-      skipEmptyLines: true,
-      complete: (results) => {
-        const raw = results.data;
-        const parsed = raw.map(row => ({
-          DATUM_SNAPSHOTU: new Date(row[0]),
-          TYP_INVESTICE: row[2],
-          HODNOTA: parseFloat(row[5]) || 0,
-          PRIRUSTEK_M: parseFloat(row[8]) || 0,
-          PRIRUSTEK_Y: parseFloat(row[9]) || 0,
-          CELKOVY_ZISK: parseFloat(row[12]) || 0
-        })).filter(row => !isNaN(row.DATUM_SNAPSHOTU.getTime()));
+export const parseCsvText = (csvString) => {
+  if (!csvString) return [];
+  const results = Papa.parse(csvString, { header: false, skipEmptyLines: true });
+  const raw = results.data;
+  const parsed = raw.map(row => ({
+    DATUM_SNAPSHOTU: new Date(row[0]),
+    TYP_INVESTICE: row[2],
+    HODNOTA: parseFloat(row[5]) || 0,
+    PRIRUSTEK_M: parseFloat(row[8]) || 0,
+    PRIRUSTEK_Y: parseFloat(row[9]) || 0,
+    CELKOVY_ZISK: parseFloat(row[12]) || 0
+  })).filter(row => row.TYP_INVESTICE && !isNaN(row.DATUM_SNAPSHOTU.getTime()));
 
-        parsed.forEach(row => {
-          row.YEAR_MONTH = `${row.DATUM_SNAPSHOTU.getFullYear()}-${String(row.DATUM_SNAPSHOTU.getMonth() + 1).padStart(2, '0')}`;
-        });
-
-        resolve(parsed);
-      },
-      error: reject
-    });
+  parsed.forEach(row => {
+    row.YEAR_MONTH = `${row.DATUM_SNAPSHOTU.getFullYear()}-${String(row.DATUM_SNAPSHOTU.getMonth() + 1).padStart(2, '0')}`;
   });
 
-  const primaryUrl = import.meta.env.DEV ? '/PORTFOLIO.csv' : '/api/portfolio';
+  return parsed;
+};
+
+// Bundled fallback data for instant 0ms rendering
+export const getInitialData = () => {
   try {
-    const data = await tryParse(primaryUrl);
-    if (data && data.length > 0) return data;
-    throw new Error('Empty data');
-  } catch (err) {
-    console.warn(`Data source ${primaryUrl} unavailable, falling back to /PORTFOLIO.csv:`, err);
-    return await tryParse('/PORTFOLIO.csv');
+    return parseCsvText(fallbackCsv);
+  } catch (e) {
+    console.error('Failed to parse bundled fallback CSV:', e);
+    return [];
   }
+};
+
+export const loadData = async () => {
+  // If not development, try live API endpoint
+  if (!import.meta.env.DEV) {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 6000);
+      const res = await fetch('/api/portfolio', { signal: controller.signal });
+      clearTimeout(timeoutId);
+
+      if (res.ok) {
+        const text = await res.text();
+        if (text && !text.trim().startsWith('<')) {
+          const liveData = parseCsvText(text);
+          if (liveData && liveData.length > 0) return liveData;
+        }
+      }
+    } catch (err) {
+      console.warn('Live API fetch (/api/portfolio) failed, falling back to bundled data:', err);
+    }
+  }
+
+  // Fallback to static /PORTFOLIO.csv
+  try {
+    const res = await fetch('/PORTFOLIO.csv');
+    if (res.ok) {
+      const text = await res.text();
+      if (text && !text.trim().startsWith('<')) {
+        const staticData = parseCsvText(text);
+        if (staticData && staticData.length > 0) return staticData;
+      }
+    }
+  } catch (err) {
+    console.warn('Static /PORTFOLIO.csv fetch failed:', err);
+  }
+
+  return getInitialData();
 };
 
 export const filterData = (data, selectedInvestments, monthsBack) => {
